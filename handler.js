@@ -62,13 +62,14 @@ module.exports.crawlCourier = (event, context, callback) => {
       body: JSON.stringify({message: message})
     }
   }
-
+  
   const body = JSON.parse(event.body);
   const id = body.id;
-  // if (id === null) {
-  //   callback(null, createResponse(400, 'Required Missing Field'))
-  // }
+  if (id === null) {
+    callback(null, createResponse(400, 'Required Missing Field'))
+  }
   MongoClient.connect(MLAB_URL, (err, database) => {
+    console.log('in herer in mongodb connection');
     if (err) {
       console.log('error in connection to database')
       callback(null, createResponse(500, 'Unable to connect to Database'))
@@ -76,6 +77,10 @@ module.exports.crawlCourier = (event, context, callback) => {
     }
     const db = database.db(DBNAME);
     const collection = db.collection(COLLECTIONNAME);
+    const bookingData = [];
+    const travellingData = [];
+    const deliveryData= []
+    let documentLink =''
     const options = {
       uri: `http://www.shreemaruticourier.com/track-your-shipment/?tracking_id=${id}`,
       transform: (body) => {
@@ -107,6 +112,11 @@ module.exports.crawlCourier = (event, context, callback) => {
           documentLink = a;
         }
       });
+      console.log(bookingData);
+      console.log(travellingData);
+      console.log(deliveryData);
+      console.log(documentLink)
+
       return {
         crawledData: bookingData[0].split(/\n/),
         link: documentLink,
@@ -116,7 +126,7 @@ module.exports.crawlCourier = (event, context, callback) => {
         }
       }
     }).then(data => {
-      console.log('in herer incollection');
+      console.log('in herer in collection');
       collection.findOneAndUpdate({
         courierId: id
       }, {
@@ -140,7 +150,7 @@ module.exports.crawlCourier = (event, context, callback) => {
         throw new Error('Unable to Save to Database');
       })
     }).catch(err => {
-      callback(null, createResponse(500, 'err occured in saving'))
+      callback(null, createResponse(500, err))
       database.close()
     })
   })

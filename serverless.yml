@@ -72,7 +72,7 @@ functions:
               - X-Amz-Security-Token
               - X-Amz-User-Agent
             allowCredentials: false
-  check:
+  crawler:
     handler: handler.crawlCourier
     events:
        - http:
