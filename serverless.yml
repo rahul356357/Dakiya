@@ -20,7 +20,7 @@ service: aws-nodejs # NOTE: update this with your service name
 provider:
   name: aws
   runtime: nodejs6.10
-  timeout: 12
+  timeout: 40
   region: ap-south-1
 
 # you can overwrite defaults here
