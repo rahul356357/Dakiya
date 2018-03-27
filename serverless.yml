@@ -21,10 +21,10 @@ provider:
   name: aws
   runtime: nodejs6.10
   timeout: 12
+  region: ap-south-1
 
 # you can overwrite defaults here
 #  stage: dev
-#  region: us-east-1
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -87,7 +87,13 @@ functions:
               - X-Api-Key
               - X-Amz-Security-Token
               - X-Amz-User-Agent
-            allowCredentials: false         
+            allowCredentials: false 
+  status:
+    handler: handler.checkCourierStatus
+    events:
+       - schedule:
+           rate: cron(*/5 * * * ? *)
+           enabled: true
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

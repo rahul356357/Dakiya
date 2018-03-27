@@ -14,7 +14,6 @@ const MLAB_URL = 'mongodb://boris:boris@ds123499.mlab.com:23499/dakiya';
 const DBNAME = 'dakiya';
 const COLLECTIONNAME = 'courier';
 
-
 ///////////// register tod database /////////////////////
 module.exports.registerToDatabase = (event, context, callback) => {
   const body = JSON.parse(event.body);
@@ -62,7 +61,7 @@ module.exports.crawlCourier = (event, context, callback) => {
       body: JSON.stringify({message: message})
     }
   }
-  
+
   const body = JSON.parse(event.body);
   const id = body.id;
   if (id === null) {
@@ -79,8 +78,8 @@ module.exports.crawlCourier = (event, context, callback) => {
     const collection = db.collection(COLLECTIONNAME);
     const bookingData = [];
     const travellingData = [];
-    const deliveryData= []
-    let documentLink =''
+    const deliveryData = []
+    let documentLink = ''
     const options = {
       uri: `http://www.shreemaruticourier.com/track-your-shipment/?tracking_id=${id}`,
       transform: (body) => {
@@ -130,7 +129,7 @@ module.exports.crawlCourier = (event, context, callback) => {
       collection.findOneAndUpdate({
         courierId: id
       }, {
-        courierId:id,
+        courierId: id,
         deliveryStatus: data.crawledData[7],
         reciever: data.crawledData[4],
         bookingDate: data.crawledData[1],
@@ -142,7 +141,7 @@ module.exports.crawlCourier = (event, context, callback) => {
         travellingInfo: data.travellingInfo,
         time: new Date().toString(),
         emailSend: false
-      }, {upsert:true}).then(d => {
+      }, {upsert: true}).then(d => {
         console.log('in herereererer data saved')
         callback(null, createResponse(200, 'successfully crawled'))
         database.close()
@@ -157,8 +156,13 @@ module.exports.crawlCourier = (event, context, callback) => {
 }
 
 // //  ---------------crawlCourier   ------------------------//////////
-// module.exports.checkCourierStatus = (event, context, callback) => { const
-// body = JSON.parse(event.body); const id = body.id; const createResponse =
-// (statusCode, message, event) => {   return {     statusCode: statusCode,
-// body: JSON.stringify({message: message})   } } callback(null,
-// createResponse(200, "in herererererer")) }
+module.exports.checkCourierStatus = (event, context, callback) => {
+  const createResponse = (statusCode, message, event) => {
+    return {
+      statusCode: statusCode,
+      body: JSON.stringify({message: message})
+    }
+  }
+  console.log(new Date().toLocaleString())
+  callback(null, createResponse(200, "in herererererer"))
+}
