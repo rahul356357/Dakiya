@@ -10,7 +10,7 @@ const transporter = require('nodemailer').createTransport({
     user: 'rahulbora2068@gmail.com',
   }
 });
-const MLAB_URL = 'mongodb://boris:boris@ds123499.mlab.com:23499/dakiya';
+const MLAB_URL = 'mongodb://<dbname>:<passsword>@ds123499.mlab.com:23499/dakiya';
 const DBNAME = 'dakiya';
 const COLLECTIONNAME = 'courier';
 
