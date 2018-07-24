@@ -7,7 +7,7 @@ var aws = require('aws-sdk');
 const transporter = require('nodemailer').createTransport({
   service: 'gmail',
   auth: {
-    user: 'rahulbora2068@gmail.com',
+    user: '<username>',
   }
 });
 const MLAB_URL = 'mongodb://<dbname>:<passsword>@ds123499.mlab.com:23499/dakiya';
