@@ -5,8 +5,8 @@ const MongoClient = require('mongodb').MongoClient
 const transporter = require('nodemailer').createTransport({
   service: 'gmail',
   auth: {
-    user: 'rahulbora2068@gmail.com',
-    pass: 'tanuja@2068'
+    user: '',
+    pass: ''
   }
 });
 const MLAB_URL = 'mongodb://boris:boris@ds123499.mlab.com:23499/dakiya';
