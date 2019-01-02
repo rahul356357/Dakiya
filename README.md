@@ -20,4 +20,7 @@ Prerequisite
 <ul></ul>
 <li> Installed Nodejs version 8.x or above </li>
 <li> AWS SDK configured to allow access to use Lambdas service   </li>
+<li> MLAB account </li>
 </ul>
+
+Add configuration for nodemailer and mLab url  to start the project 
